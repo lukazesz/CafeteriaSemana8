@@ -1,30 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio</title>
-    <link rel="shortcut icon" href="https://th.bing.com/th/id/R.64e2b7f5617a57be5e8dcd764b512d82?rik=Dg9FkvhLAST4%2fA&pid=ImgRaw&r=0" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8"> <!-- Define a codificação de caracteres da página -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsividade para dispositivos móveis -->
+    <title>Cardápio</title> <!-- Título que aparece na aba do navegador -->
+    
+    <!-- Ícone da aba do navegador -->
+    <link rel="shortcut icon"
+        href="https://th.bing.com/th/id/R.64e2b7f5617a57be5e8dcd764b512d82?rik=Dg9FkvhLAST4%2fA&pid=ImgRaw&r=0"
+        type="image/x-icon">
+    
+    <!-- Importa o CSS do Bootstrap a partir da pasta node_modules -->
+    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Importa o CSS do Toastify para notificações -->
+    <link rel="stylesheet" type="text/css" href="./node_modules/toastify-js/src/toastify.css">
 </head>
+
 <body>
     <header>
+        <!-- Barra de navegação com Bootstrap -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
+                <!-- Logo e nome do site -->
                 <a class="navbar-brand d-flex align-items-center gap-2" href="#">
                     <img src="https://th.bing.com/th/id/R.64e2b7f5617a57be5e8dcd764b512d82?rik=Dg9FkvhLAST4%2fA&pid=ImgRaw&r=0"
                         alt="Logo" width="30" height="30">
                     Lost Coffee
                 </a>
+
+                <!-- Botão para menu colapsável em telas pequenas -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <!-- Itens do menu que são escondidos em telas pequenas -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
+                        <!-- Link para a página Home -->
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
                         </li>
+                        <!-- Link para a página Cardápio -->
                         <li class="nav-item">
                             <a class="nav-link" href="./cardapio.html">Cardápio</a>
                         </li>
@@ -33,101 +52,89 @@
             </div>
         </nav>
     </header>
+
     <main class="container py-4">
+        <!-- Formulário de busca de produto e botão para abrir modal de adicionar item -->
         <form class="d-flex align-items-end gap-2" style="max-width: 500px;">
             <div class="flex-grow-1">
                 <label for="exampleInputProduct" class="form-label">Buscar</label>
                 <input type="text" class="form-control" id="exampleInputProduct" placeholder="Digite o produto">
             </div>
-            <button type="button" class="btn btn-primary h-50 mt-auto"
-        data-bs-toggle="modal" data-bs-target=".modal">+</button>
-
+            <!-- Botão que abre o modal para adicionar novo item -->
+            <button type="button" class="btn btn-primary h-50 mt-auto" data-bs-toggle="modal"
+                data-bs-target=".modal">+</button>
         </form>
-        <div class="modal" tabindex="-1">
+
+        <!-- Modal para cadastro de novo item no cardápio -->
+        <div id="itensCardapioModal" class="modal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
+                    <!-- Cabeçalho do modal -->
                     <div class="modal-header">
                         <h5 class="modal-title">Cardápio</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <!-- Corpo do modal com formulário para cadastro -->
                     <div class="modal-body">
-                        <p>Modal body text goes here.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Pesquisar</button>
+                        <form id="itemCadastrarForm">
+                            <!-- Campo para o nome do item -->
+                            <div class="mb-3">
+                                <label for="exampleInputProduct" class="form-label">item</label>
+                                <input type="text" class="form-control" id="item" name="item"
+                                    placeholder="Digite o item">
+                            </div>
+                            <!-- Campo para o preço do item -->
+                            <div class="mb-3">
+                                <label for="exampleInputProduct" class="form-label">preço</label>
+                                <input type="text" class="form-control" id="preco" name="preco"
+                                    placeholder="Digite o preço">
+                            </div>
+                            <!-- Campo para descrição do item -->
+                            <div class="mb-3">
+                                <label for="exampleInputProduct" class="form-label">descrição</label>
+                                <input type="text" class="form-control" id="descricao" name="descricao"
+                                    placeholder="Digite a descrição">
+                            </div>
+                            <!-- Rodapé do modal com botões de cancelar e salvar -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">salvar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Tabela que exibirá os itens do cardápio -->
         <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Item</th>
-      <th scope="col">Preço</th>
-      <th scope="col">Descrição</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+            <thead>
+                <tr>
+                    <th scope="col">ID</th> <!-- Coluna para ID do item -->
+                    <th scope="col">Item</th> <!-- Coluna para nome do item -->
+                    <th scope="col">Preço</th> <!-- Coluna para preço -->
+                    <th scope="col">Descrição</th> <!-- Coluna para descrição -->
+                </tr>
+            </thead>
+            <tbody id="tabelaItens"> <!-- Corpo da tabela onde os itens serão inseridos dinamicamente -->
+            </tbody>
+        </table>
     </main>
 
-    <footer class="row row-cols-5 py-5 my-5 border-top ">
-        <div class="col">
-            <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
-            </a>
-            <p class="text-muted">© 2025</p>
-        </div>
-
-        <div class="col">
-
-        </div>
-
-        <div class="col">
-            <h5>About</h5>
-            <ul class="nav flex-column">
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-            </ul>
-        </div>
-
-        <div class="col">
-            <h5>Contact</h5>
-            <ul class="nav flex-column">
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-            </ul>
+    <!-- Rodapé fixo na parte inferior da página -->
+    <footer class="border-top py-3 bg-light" style="position: fixed; bottom: 0; width: 100%; text-align: center;">
+        <div class="container">
+            <p class="mb-0 text-muted">© 2025 Lost Coffee</p>
         </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Scripts importados -->
+    <script src="./node_modules/toastify-js/src/toastify.js"></script> <!-- Biblioteca para notificações Toast -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- jQuery para manipulação DOM e Ajax -->
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script> <!-- JS do Bootstrap com Popper -->
+    <script src="./src/cardapio.js"></script> <!-- Script personalizado para funcionalidades do cardápio -->
+
 </body>
+
 </html>
